@@ -32,4 +32,36 @@ class NewMeetup(Resource):
                 'password': meetup.password
                 }, 200
 
+class Meetups(Resource):
+    def get(self, meetup_id):
+        meetup = Meetup.query.get_or_404(meetup_id)
+        meetup.timeslots.all()
+        meetup.activities.all()
+
+        timeslots = []
+        for ts in meetup.timeslots:
+            timeslots.append({
+                    'start_time': str(ts.start_time),
+                    'end_time': str(ts.end_time),
+                    'votes': ts.votes
+                })
+
+        activities = []
+        for ac in meetup.activities:
+            activities.append({
+                    'tripadvisor_id': ac.tripadvisor_id,
+                    'name': ac.name,
+                    'votes': ac.votes
+                })
+
+        return {
+                'id': meetup.id,
+                'name': meetup.name,
+                'organizer': meetup.organizer,
+                'timeslots': timeslots,
+                'activities': activities
+        }
+
+
 api.add_resource(NewMeetup, "/meetups")
+api.add_resource(Meetups, "/meetups/<string:meetup_id>")

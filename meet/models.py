@@ -60,4 +60,4 @@ class Meetup(CRUDMixin, db.Model):
         self.password = generate_id()
 
     def __repr__(self):
-        return '<User %r>' % self.name
+        return '<Meetup %r>' % self.id
