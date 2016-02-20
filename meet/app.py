@@ -4,9 +4,9 @@ import logging.handlers
 from flask import Flask, render_template
 
 from config import config
-from .extensions import db, admin, api
-from .api import NewMeetup
+from .extensions import db, admin
 from .admin import admin_bp
+from .api import api_bp
 
 
 def create_app(config_name):
@@ -16,7 +16,6 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-    configure_apis(app)
     configure_blueprints(app)
     configure_extensions(app)
     configure_errorhandlers(app)
@@ -33,14 +32,9 @@ def configure_extensions(app):
     # Flask-Admin
     admin.init_app(app)
 
-    # Flask-RESTful
-    api.init_app(app)
-
-def configure_apis(app):
-    api.add_resource(NewMeetup, '/meetups')
-
 def configure_blueprints(app):
     app.register_blueprint(admin_bp)
+    app.register_blueprint(api_bp)
 
 def configure_errorhandlers(app):
     pass
