@@ -41,6 +41,7 @@ class Meetups(Resource):
         timeslots = []
         for ts in meetup.timeslots:
             timeslots.append({
+                    'id': ts.id,
                     'start_time': str(ts.start_time),
                     'end_time': str(ts.end_time),
                     'votes': ts.votes
@@ -49,6 +50,7 @@ class Meetups(Resource):
         activities = []
         for ac in meetup.activities:
             activities.append({
+                    'id': ac.id,
                     'tripadvisor_id': ac.tripadvisor_id,
                     'name': ac.name,
                     'votes': ac.votes
@@ -58,6 +60,44 @@ class Meetups(Resource):
                 'id': meetup.id,
                 'name': meetup.name,
                 'organizer': meetup.organizer,
+                'timeslots': timeslots,
+                'activities': activities
+        }
+
+    def put(self, meetup_id):
+        meetup = Meetup.query.get_or_404(meetup_id)
+        data = request.get_json(force=True)
+
+        meetup.timeslots.all()
+        meetup.activities.all()
+
+        for id in data['timeslot_ids']:
+            for ts in meetup.timeslots:
+                if ts.id == id:
+                    ts.votes += 1
+                    ts.save()
+
+        for id in data['activity_ids']:
+            for ac in meetup.activities:
+                if ac.id == id:
+                    ac.votes += 1
+                    ac.save()
+
+        timeslots = []
+        for ts in meetup.timeslots:
+            timeslots.append({
+                    'id': ts.id,
+                    'votes': ts.votes
+                })
+
+        activities = []
+        for ac in meetup.activities:
+            activities.append({
+                    'id': ac.id,
+                    'votes': ac.votes
+                })
+
+        return {
                 'timeslots': timeslots,
                 'activities': activities
         }

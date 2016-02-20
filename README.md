@@ -44,6 +44,7 @@
     "organizer": "Kyle",
     "timeslots": [
         {
+            "id": "1",
             "start_time": "2016-02-10 07:00:00",
             "end_time": "2016-02-10 09:00:00",
             "votes": "2"
@@ -52,6 +53,7 @@
     ],
     "activities": [
         {
+            "id", "1",
             "tripadvisor_id": "123123",
             "name": "Amy's Cafe",
             "votes": "0"
@@ -61,3 +63,40 @@
 }
 ```
 
+# PUT /meetups/<string:meetup_id>
+
+> Vote for the activities and timeslots
+ 
+## Request
+```
+{
+    "timeslot_ids": [
+        1,
+        ...
+    ],
+    "activitiy_ids": [
+        1,
+        ...
+    ]
+}
+```
+
+## Response 
+```
+{
+    "timeslot_ids": [
+        {
+            "id": "1",
+            "votes": "2"
+        }, 
+        ...
+    ],
+    "activitiy_ids": [
+        {
+            "id", "1",
+            "votes": "0"
+        },
+        ...
+    ]
+}
+```
