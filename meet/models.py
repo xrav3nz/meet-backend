@@ -12,6 +12,7 @@ class Activity(CRUDMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     meetup_id = db.Column(db.String(9), db.ForeignKey('meetups.id'))
+    is_restaurant = db.Column(db.Boolean)
     web_url = db.Column(db.String(255))
     name = db.Column(db.String(255))
     votes = db.Column(db.Integer, default=0)

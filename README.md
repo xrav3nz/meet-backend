@@ -16,6 +16,13 @@
     ],
     "activities": [
         {
+            "web_url": "https://www.tripadvisor.ca/Restaurant_Review-g154945-d6280714-Reviews-Boardgame_Cafe-Victoria_Victoria_Capital_Regional_District_Vancouver_Island_Briti.html",
+            "name": "Board Game Cafe"
+        },
+        ...
+    ],
+    "restaurants": [
+        {
             "web_url": "http://www.tripadvisor.com/Restaurant_Review-g60745-d3398229-Reviews-m11068-Wan_Convenience_Store-Boston_Massachusetts.html",
             "name": "Amy's Cafe"
         },
@@ -54,9 +61,18 @@
     "activities": [
         {
             "id", "1",
+            "web_url": "https://www.tripadvisor.ca/Restaurant_Review-g154945-d6280714-Reviews-Boardgame_Cafe-Victoria_Victoria_Capital_Regional_District_Vancouver_Island_Briti.html",
+            "name": "Board Game Cafe",
+            "votes": "0"
+        },
+        ...
+    ],
+    "restaurants": [
+        {
+            "id", "1",
             "web_url": "http://www.tripadvisor.com/Restaurant_Review-g60745-d3398229-Reviews-m11068-Wan_Convenience_Store-Boston_Massachusetts.html",
             "name": "Amy's Cafe",
-            "votes": "0"
+            "votes": "3"
         },
         ...
     ]
@@ -74,7 +90,7 @@
         1,
         ...
     ],
-    "activitiy_ids": [
+    "activity_ids": [
         1,
         ...
     ]
@@ -84,14 +100,14 @@
 ## Response 
 ```
 {
-    "timeslot_ids": [
+    "timeslots": [
         {
             "id": "1",
             "votes": "2"
         }, 
         ...
     ],
-    "activitiy_ids": [
+    "activities": [
         {
             "id", "1",
             "votes": "0"
@@ -103,9 +119,9 @@
 
 
 
-# GET /resturants/\<string:latitude\>,\<string:longtitude\>
+# GET /restaurants/\<string:latitude\>,\<string:longtitude\>
 
-> Search for resturants at the given coordinate
+> Search for restaurants at the given coordinate
  
 ## Parameters
 **`count`** *optional*  
@@ -113,7 +129,7 @@
 
 ## Request
 ```
-/resturants/42.33141,-71.099396?count=5
+/restaurants/42.33141,-71.099396?count=5
 ```
 
 ## Response 
@@ -144,3 +160,44 @@
 }
 ```
 
+
+# GET /attractions/\<string:latitude\>,\<string:longtitude\>
+
+> Search for restaurants at the given coordinate
+ 
+## Parameters
+**`count`** *optional*  
+> Default: 5, number of results to return  
+
+## Request
+```
+/attractions/42.33141,-71.099396?count=5
+```
+
+## Response 
+```
+{
+    "results": [
+        {
+            "name": "Diablo Glass School",
+            "web_url": "http://www.tripadvisor.com/Attraction_Review-g60745-d3546275-Reviews-m11068-Diablo_Glass_School-Boston_Massachusetts.html"
+        },
+        {
+            "name": "The Squealing Pig Boston",
+            "web_url": "http://www.tripadvisor.com/Attraction_Review-g60745-d5831233-Reviews-m11068-The_Squealing_Pig_Boston-Boston_Massachusetts.html"
+        },
+        {
+            "name": "Warren Anatomical Museum",
+            "web_url": "http://www.tripadvisor.com/Attraction_Review-g60745-d7224158-Reviews-m11068-Warren_Anatomical_Museum-Boston_Massachusetts.html"
+        },
+        {
+            "name": "Penguin Pizza",
+            "web_url": "http://www.tripadvisor.com/Attraction_Review-g60745-d5845923-Reviews-m11068-Penguin_Pizza-Boston_Massachusetts.html"
+        },
+        {
+            "name": "Mission Bar & Grill",
+            "web_url": "http://www.tripadvisor.com/Attraction_Review-g60745-d5842367-Reviews-m11068-Mission_Bar_Grill-Boston_Massachusetts.html"
+        }
+    ]
+}
+```

@@ -24,7 +24,13 @@ class NewMeetup(Resource):
             timeslot.save()
 
         for ac in data['activities']:
-            activity = Activity(meetup_id=meetup.id)
+            activity = Activity(meetup_id=meetup.id, is_restaurant=False)
+            activity.web_url = ac['web_url']
+            activity.name = ac['name']
+            activity.save()
+
+        for ac in data['restaurants']:
+            activity = Activity(meetup_id=meetup.id, is_restaurant=True)
             activity.web_url = ac['web_url']
             activity.name = ac['name']
             activity.save()
@@ -50,20 +56,30 @@ class Meetups(Resource):
                 })
 
         activities = []
+        restaurants = []
         for ac in meetup.activities:
-            activities.append({
-                    'id': ac.id,
-                    'web_url': ac.web_url,
-                    'name': ac.name,
-                    'votes': ac.votes
-                })
+            if ac.is_restaurant:
+                restaurants.append({
+                        'id': ac.id,
+                        'web_url': ac.web_url,
+                        'name': ac.name,
+                        'votes': ac.votes
+                    })
+            else:
+                activities.append({
+                        'id': ac.id,
+                        'web_url': ac.web_url,
+                        'name': ac.name,
+                        'votes': ac.votes
+                    })
 
         return {
                 'id': meetup.id,
                 'name': meetup.name,
                 'organizer': meetup.organizer,
                 'timeslots': timeslots,
-                'activities': activities
+                'activities': activities,
+                'restaurants': restaurants
         }, 200
 
     def put(self, meetup_id):
@@ -104,7 +120,7 @@ class Meetups(Resource):
                 'activities': activities
         }, 200
 
-class Resturants(Resource):
+class Restaurants(Resource):
     def get(self, latitude, longitude):
         count = request.args.get('count', 5, type=int)
         url = "http://api.tripadvisor.com/api/partner/2.0/map/%s,%s/restaurants?key=%s" % (latitude, longitude, current_app.config['TA_API_KEY'])
@@ -120,7 +136,24 @@ class Resturants(Resource):
 
         return {'results': results}, 200
 
+class Attractions(Resource):
+    def get(self, latitude, longitude):
+        count = request.args.get('count', 5, type=int)
+        url = "http://api.tripadvisor.com/api/partner/2.0/map/%s,%s/attractions?key=%s" % (latitude, longitude, current_app.config['TA_API_KEY'])
+        r = requests.get(url).json()
+
+        results = []
+
+        for data in r['data'][:count]:
+            results.append({
+                    'web_url': data['web_url'],
+                    'name': data['name']
+                })
+
+        return {'results': results}, 200
+
 
 api.add_resource(NewMeetup, "/meetups")
 api.add_resource(Meetups, "/meetups/<string:meetup_id>")
-api.add_resource(Resturants, "/resturants/<string:latitude>,<string:longitude>")
+api.add_resource(Restaurants, "/restaurants/<string:latitude>,<string:longitude>")
+api.add_resource(Attractions, "/attractions/<string:latitude>,<string:longitude>")
