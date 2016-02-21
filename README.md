@@ -16,7 +16,7 @@
     ],
     "activities": [
         {
-            "tripadvisor_id": "123123",
+            "web_url": "http://www.tripadvisor.com/Restaurant_Review-g60745-d3398229-Reviews-m11068-Wan_Convenience_Store-Boston_Massachusetts.html",
             "name": "Amy's Cafe"
         },
         ...
@@ -54,7 +54,7 @@
     "activities": [
         {
             "id", "1",
-            "tripadvisor_id": "123123",
+            "web_url": "http://www.tripadvisor.com/Restaurant_Review-g60745-d3398229-Reviews-m11068-Wan_Convenience_Store-Boston_Massachusetts.html",
             "name": "Amy's Cafe",
             "votes": "0"
         },

@@ -25,7 +25,7 @@ class NewMeetup(Resource):
 
         for ac in data['activities']:
             activity = Activity(meetup_id=meetup.id)
-            activity.tripadvisor_id = ac['tripadvisor_id']
+            activity.web_url = ac['web_url']
             activity.name = ac['name']
             activity.save()
 
@@ -53,7 +53,7 @@ class Meetups(Resource):
         for ac in meetup.activities:
             activities.append({
                     'id': ac.id,
-                    'tripadvisor_id': ac.tripadvisor_id,
+                    'web_url': ac.web_url,
                     'name': ac.name,
                     'votes': ac.votes
                 })
