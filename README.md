@@ -32,7 +32,7 @@
 }
 ```
 
-# GET /meetups/<string:meetup_id>
+# GET /meetups/\<string:meetup_id\>
 
 > Return the information of the specific meetup
  
@@ -63,7 +63,7 @@
 }
 ```
 
-# PUT /meetups/<string:meetup_id>
+# PUT /meetups/\<string:meetup_id\>
 
 > Vote for the activities and timeslots
  
@@ -100,3 +100,47 @@
     ]
 }
 ```
+
+
+
+# GET /resturants/\<string:latitude\>,\<string:longtitude\>
+
+> Search for resturants at the given coordinate
+ 
+## Parameters
+**`count`** *optional*  
+> Default: 5, number of results to return  
+
+## Request
+```
+/resturants/42.33141,-71.099396?count=5
+```
+
+## Response 
+```
+{
+    "results": [
+        {
+            "name": "Chacho's Pizza & Subs",
+            "web_url": "http://www.tripadvisor.com/Restaurant_Review-g60745-d4225110-Reviews-m11068-Chacho_s_Pizza_Subs-Boston_Massachusetts.html"
+        },
+        {
+            "name": "Wan Convenience Store",
+            "web_url": "http://www.tripadvisor.com/Restaurant_Review-g60745-d3398229-Reviews-m11068-Wan_Convenience_Store-Boston_Massachusetts.html"
+        },
+        {
+            "name": "Crispy Dough Pizzeria",
+            "web_url": "http://www.tripadvisor.com/Restaurant_Review-g60745-d4198412-Reviews-m11068-Crispy_Dough_Pizzeria-Boston_Massachusetts.html"
+        },
+        {
+            "name": "Lilly's Gourmet Pasta Express",
+            "web_url": "http://www.tripadvisor.com/Restaurant_Review-g60745-d2080094-Reviews-m11068-Lilly_s_Gourmet_Pasta_Express-Boston_Massachusetts.html"
+        },
+        {
+            "name": "Diploma Mill",
+            "web_url": "http://www.tripadvisor.com/Restaurant_Review-g60745-d5223032-Reviews-m11068-Diploma_Mill-Boston_Massachusetts.html"
+        }
+    ]
+}
+```
+

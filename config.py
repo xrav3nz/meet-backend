@@ -8,7 +8,7 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     BCRYPT_LOG_ROUNDS = 12
-    MASHAPE_KEY = os.environ.get('MASHAPE_KEY')
+    TA_API_KEY = os.environ.get('TA_API_KEY')
 
     INFO_LOG = 'info.log'
     ERROR_LOG = 'error.log'

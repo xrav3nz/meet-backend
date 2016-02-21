@@ -1,7 +1,9 @@
 from datetime import datetime
 
-from flask import request, Blueprint
+from flask import request, Blueprint, current_app
 from flask_restful import Resource, abort
+
+import requests
 
 from .models import Meetup, TimeSlot, Activity
 from .extensions import api
@@ -30,7 +32,7 @@ class NewMeetup(Resource):
         return {
                 'id': meetup.id,
                 'password': meetup.password
-                }, 200
+                }, 201
 
 class Meetups(Resource):
     def get(self, meetup_id):
@@ -62,7 +64,7 @@ class Meetups(Resource):
                 'organizer': meetup.organizer,
                 'timeslots': timeslots,
                 'activities': activities
-        }
+        }, 200
 
     def put(self, meetup_id):
         meetup = Meetup.query.get_or_404(meetup_id)
@@ -100,8 +102,25 @@ class Meetups(Resource):
         return {
                 'timeslots': timeslots,
                 'activities': activities
-        }
+        }, 200
+
+class Resturants(Resource):
+    def get(self, latitude, longitude):
+        count = request.args.get('count', 5, type=int)
+        url = "http://api.tripadvisor.com/api/partner/2.0/map/%s,%s/restaurants?key=%s" % (latitude, longitude, current_app.config['TA_API_KEY'])
+        r = requests.get(url).json()
+
+        results = []
+
+        for data in r['data'][:count]:
+            results.append({
+                    'web_url': data['web_url'],
+                    'name': data['name']
+                })
+
+        return {'results': results}, 200
 
 
 api.add_resource(NewMeetup, "/meetups")
 api.add_resource(Meetups, "/meetups/<string:meetup_id>")
+api.add_resource(Resturants, "/resturants/<string:latitude>,<string:longitude>")
